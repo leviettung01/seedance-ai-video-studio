@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Seedance AI Video Studio — Tạo video AI 30s/15s qua Dola AI với tự động hóa hoàn toàn">
+    <title>Seedance AI Video Studio</title>
+    <link rel="stylesheet" href="/assets/style.css">
+</head>
+<body>
+
+<div class="app-container">
+    <!-- ═══ Sidebar ═══ -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <div class="sidebar-logo">
+                <div class="logo-icon">🎬</div>
+                <div>
+                    <h1>Seedance AI<br><span class="version">Video Studio v2.0</span></h1>
+                </div>
+            </div>
+        </div>
+
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-section="dashboard">
+                <span class="nav-icon">🎨</span> Tạo Video
+            </button>
+            <button class="nav-item" data-section="accounts">
+                <span class="nav-icon">👤</span> Tài khoản
+            </button>
+            <button class="nav-item" data-section="proxy">
+                <span class="nav-icon">🌐</span> Proxy Pool
+            </button>
+            <button class="nav-item" data-section="gallery">
+                <span class="nav-icon">🎥</span> Video Gallery
+            </button>
+            <button class="nav-item" data-section="jobs">
+                <span class="nav-icon">📋</span> Lịch sử Jobs
+            </button>
+            <button class="nav-item" data-section="license">
+                <span class="nav-icon">🔑</span> License
+            </button>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="server-status">
+                <span class="status-dot"></span>
+                <span>Server: 127.0.0.1:8899</span>
+            </div>
+        </div>
+    </aside>
+
+    <!-- ═══ Main Content ═══ -->
+    <main class="main-content">
+
+        <!-- ═══ Dashboard / Tạo Video ═══ -->
+        <div id="section-dashboard" class="section active">
+            <div class="page-header">
+                <h2>🎬 Tạo Video AI</h2>
+                <p class="subtitle">Nhập prompt và cấu hình để tạo video với Seedance AI qua Dola</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="stats-grid" id="dashboard-stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-accounts">0</div>
+                    <div class="stat-label">Tài khoản</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-active">0</div>
+                    <div class="stat-label">Còn Quota</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-jobs">0</div>
+                    <div class="stat-label">Jobs Hôm Nay</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="stat-videos">0</div>
+                    <div class="stat-label">Video Tổng</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <!-- Left: Form -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3>📝 Cấu hình Video</h3>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Prompt</label>
+                        <textarea id="input-prompt" placeholder="Mô tả nội dung video bạn muốn tạo..." rows="4"></textarea>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Tỷ lệ khung hình</label>
+                            <div class="toggle-group" id="toggle-ratio">
+                                <button class="toggle-option active" data-value="16:9">16:9</button>
+                                <button class="toggle-option" data-value="9:16">9:16</button>
+                                <button class="toggle-option" data-value="1:1">1:1</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Chế độ</label>
+                            <div class="toggle-group" id="toggle-mode">
+                                <button class="toggle-option active" data-value="standard">30s Standard</button>
+                                <button class="toggle-option" data-value="pro_15s">15s Pro</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Model</label>
+                            <div class="toggle-group" id="toggle-model">
+                                <button class="toggle-option active" data-value="2.5">Seedance 2.5</button>
+                                <button class="toggle-option" data-value="2.0">Seedance 2.0</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Upscale</label>
+                            <div class="toggle-group" id="toggle-upscale">
+                                <button class="toggle-option" data-value="off">Off</button>
+                                <button class="toggle-option active" data-value="2K">2K</button>
+                                <button class="toggle-option" data-value="4K">4K</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Ảnh tham chiếu (tuỳ chọn)</label>
+                        <div class="upload-area" id="upload-area">
+                            <div class="upload-icon">📸</div>
+                            <div class="upload-text">Kéo thả ảnh vào đây hoặc click để chọn</div>
+                            <div class="upload-hint">PNG, JPG, WebP — tối đa 10MB</div>
+                        </div>
+                        <input type="file" id="file-input" accept="image/*" style="display:none">
+                        <img id="upload-preview" class="upload-preview" style="display:none">
+                    </div>
+
+                    <button class="btn btn-primary" id="btn-create-video" style="width:100%; padding:14px; font-size:15px;">
+                        🎬 Tạo Video
+                    </button>
+                </div>
+
+                <!-- Right: Progress / Active Job -->
+                <div class="card" id="card-progress">
+                    <div class="card-header">
+                        <h3>📡 Trạng thái</h3>
+                        <span class="badge badge-muted" id="job-status-badge">Chờ</span>
+                    </div>
+
+                    <div id="job-progress-area">
+                        <div class="empty-state">
+                            <div class="empty-icon">⏳</div>
+                            <h4>Sẵn sàng tạo video</h4>
+                            <p>Nhập prompt và bấm "Tạo Video" để bắt đầu</p>
+                        </div>
+                    </div>
+
+                    <div id="job-active-area" style="display:none">
+                        <div style="margin-bottom:16px">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+                                <span style="font-size:12px;color:var(--text-secondary)" id="job-progress-text">Đang khởi tạo...</span>
+                                <span style="font-size:12px;color:var(--text-muted)" id="job-elapsed">0s</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill running" id="job-progress-bar" style="width:5%"></div>
+                            </div>
+                        </div>
+
+                        <div class="job-log" id="job-log"></div>
+
+                        <div style="margin-top:12px;text-align:right">
+                            <button class="btn btn-danger btn-sm" id="btn-cancel-job">🚫 Hủy Job</button>
+                        </div>
+                    </div>
+
+                    <div id="job-result-area" style="display:none">
+                        <div style="text-align:center;padding:20px">
+                            <div style="font-size:48px;margin-bottom:12px" id="result-icon">✅</div>
+                            <h4 id="result-title">Video đã tạo thành công!</h4>
+                            <p style="font-size:13px;color:var(--text-secondary);margin-top:4px" id="result-detail"></p>
+                            <div style="margin-top:16px;display:flex;gap:8px;justify-content:center">
+                                <button class="btn btn-primary btn-sm" id="btn-open-output">📂 Mở thư mục</button>
+                                <button class="btn btn-secondary btn-sm" id="btn-new-job">➕ Tạo mới</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ Accounts ═══ -->
+        <div id="section-accounts" class="section">
+            <div class="page-header">
+                <h2>👤 Quản lý Tài khoản</h2>
+                <p class="subtitle">Quản lý tài khoản Dola AI, quota, và Chrome profiles</p>
+            </div>
+
+            <div class="card" style="margin-bottom:16px">
+                <div class="card-header">
+                    <h3>📋 Danh sách tài khoản</h3>
+                    <button class="btn btn-primary btn-sm" id="btn-add-account">➕ Thêm Account</button>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Loại</th>
+                                <th>Trạng thái</th>
+                                <th>Đăng nhập</th>
+                                <th>Quota</th>
+                                <th>Proxy</th>
+                                <th>Hành động</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accounts-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ Proxy Pool ═══ -->
+        <div id="section-proxy" class="section">
+            <div class="page-header">
+                <h2>🌐 Proxy Pool</h2>
+                <p class="subtitle">Quản lý danh sách proxy xoay vòng cho các tài khoản</p>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3>⚙️ Cấu hình Proxy</h3>
+                    <label style="display:block;margin:12px 0"><input type="checkbox" id="proxy-vpn-auto-rotate" checked> Tự động xoay IP mỗi 5 phút khi dùng VPN2Proxy</label>
+                    <p style="font-size:12px;opacity:.7">Lịch dùng chung theo cổng. Chỉ báo đổi IP sau khi kiểm tra qua proxy; reconnect có thể ngắt kết nối đang truyền dữ liệu.</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Danh sách API Key (1 key mỗi dòng)</label>
+                    <textarea id="proxy-keys" rows="6" placeholder="Nhập API key 5Stars proxy, mỗi key một dòng..."></textarea>
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Nhà mạng</label>
+                        <select id="proxy-carrier">
+                            <option value="random">Random</option>
+                            <option value="viettel">Viettel</option>
+                            <option value="vinaphone">Vinaphone</option>
+                            <option value="mobifone">Mobifone</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tỉnh thành</label>
+                        <select id="proxy-province">
+                            <option value="0">Random</option>
+                            <option value="1">Hà Nội</option>
+                            <option value="2">TP. Hồ Chí Minh</option>
+                            <option value="3">Đà Nẵng</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="display:flex;gap:8px">
+                    <button class="btn btn-primary" id="btn-save-proxy">💾 Lưu Proxy Pool</button>
+                    <button class="btn btn-secondary" id="btn-test-proxy">🔍 Test Proxy</button>
+                </div>
+
+                <div id="proxy-test-result" style="margin-top:16px;display:none"></div>
+            </div>
+        </div>
+
+        <!-- ═══ Video Gallery ═══ -->
+        <div id="section-gallery" class="section">
+            <div class="page-header">
+                <h2>🎥 Video Gallery</h2>
+                <p class="subtitle">Xem và quản lý video đã tạo</p>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-bottom:16px">
+                <button class="btn btn-secondary btn-sm" id="btn-refresh-gallery">🔄 Refresh</button>
+                <button class="btn btn-secondary btn-sm" id="btn-open-gallery-folder">📂 Mở thư mục</button>
+            </div>
+
+            <div class="video-grid" id="video-grid"></div>
+
+            <div class="empty-state" id="gallery-empty" style="display:none">
+                <div class="empty-icon">📹</div>
+                <h4>Chưa có video nào</h4>
+                <p>Tạo video đầu tiên từ tab "Tạo Video"</p>
+            </div>
+        </div>
+
+        <!-- ═══ Jobs History ═══ -->
+        <div id="section-jobs" class="section">
+            <div class="page-header">
+                <h2>📋 Lịch sử Jobs</h2>
+                <p class="subtitle">Xem lịch sử tất cả công việc tạo video</p>
+            </div>
+
+            <div class="card">
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Job ID</th>
+                                <th>Prompt</th>
+                                <th>Status</th>
+                                <th>Account</th>
+                                <th>Thời gian</th>
+                                <th>Output</th>
+                            </tr>
+                        </thead>
+                        <tbody id="jobs-tbody"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ License ═══ -->
+        <div id="section-license" class="section">
+            <div class="page-header">
+                <h2>🔑 License</h2>
+                <p class="subtitle">Quản lý bản quyền phần mềm</p>
+            </div>
+
+            <div class="card" style="max-width:480px">
+                <div class="card-header">
+                    <h3>📜 Thông tin License</h3>
+                </div>
+
+                <div class="form-group">
+                    <label>Device ID</label>
+                    <input type="text" id="device-id" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label>License Key</label>
+                    <input type="text" id="license-key" placeholder="Nhập license key...">
+                </div>
+
+                <button class="btn btn-primary" id="btn-activate-license">✅ Kích hoạt</button>
+
+                <div id="license-status" style="margin-top:16px"></div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- ═══ Add Account Modal ═══ -->
+<div class="modal-overlay" id="modal-add-account">
+    <div class="modal">
+        <div class="modal-header">
+            <h3>➕ Thêm Tài khoản Mới</h3>
+            <button class="modal-close" onclick="closeModal('modal-add-account')">✕</button>
+        </div>
+
+        <div class="form-group">
+            <label>Tên Account</label>
+            <input type="text" id="new-account-name" placeholder="vd: fb01, fb02, fb03...">
+        </div>
+
+        <div class="form-group">
+            <label>Loại đăng nhập</label>
+            <select id="new-account-type">
+                <option value="facebook">📘 Facebook VIA (Khuyên dùng)</option>
+                <option value="google">🔴 Google</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Cookie Facebook VIA (tuỳ chọn)</label>
+            <textarea id="new-account-cookies" rows="3" placeholder="Dán chuỗi c_user=...; xs=... hoặc dòng VIA (UID|Pass|2FA|Cookie...) vào đây"></textarea>
+            <span style="font-size:11px;color:var(--text-muted)">Hệ thống sẽ tạo 1 Chrome profile sạch có sẵn extension và nạp cookie FB tự động.</span>
+        </div>
+
+        <div class="form-group">
+            <label>Proxy riêng (tuỳ chọn)</label>
+            <input type="text" id="new-account-proxy" placeholder="API key 5Stars hoặc http://IP:PORT">
+        </div>
+
+        <div class="form-group">
+            <label>Quota tối đa</label>
+            <input type="number" id="new-account-quota" value="4" min="1" max="20">
+        </div>
+
+        <button class="btn btn-primary" id="btn-confirm-add-account" style="width:100%">
+            ✅ Tạo Profile & Thêm Account
+        </button>
+    </div>
+</div>
+
+<!-- ═══ Nạp Cookie Facebook VIA Modal ═══ -->
+<div class="modal-overlay" id="modal-cookie-account">
+    <div class="modal" style="max-width:520px">
+        <div class="modal-header">
+            <h3>🍪 Nạp Cookie Facebook VIA</h3>
+            <button class="modal-close" onclick="closeModal('modal-cookie-account')">✕</button>
+        </div>
+
+        <input type="hidden" id="cookie-account-name">
+
+        <div style="margin-bottom:12px">
+            <span style="font-size:13px;color:var(--text-secondary)">Tài khoản: <strong id="cookie-account-display" style="color:var(--primary)"></strong></span>
+        </div>
+
+        <div class="form-group">
+            <label>Dán Cookie Facebook / Dòng VIA</label>
+            <textarea id="cookie-account-input" rows="4" placeholder="Dán chuỗi Cookie c_user=...; xs=... hoặc định dạng UID|Pass|2FA|Cookie..."></textarea>
+            <span style="font-size:11px;color:var(--text-muted)">Sau khi nạp, Facebook sẽ được đăng nhập sẵn trên Chrome profile này để kết nối Dola.</span>
+        </div>
+
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+            <button class="btn btn-primary" id="btn-inject-and-open-fb" style="flex:1">
+                ⚡ Nạp & Mở Facebook
+            </button>
+            <button class="btn btn-secondary" id="btn-save-cookie-only">
+                💾 Lưu Cookie
+            </button>
+        </div>
+
+        <div id="cookie-inject-status" style="font-size:12px;font-weight:600;text-align:center;min-height:18px;margin-top:6px"></div>
+    </div>
+</div>
+
+<!-- ═══ Toast Container ═══ -->
+<div class="toast-container" id="toast-container"></div>
+
+<script src="/assets/app.js"></script>
+</body>
+</html>

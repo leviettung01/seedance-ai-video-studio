@@ -1,0 +1,24 @@
+[
+  {
+    "id": "acc_01",
+    "name": "Dola Account 01",
+    "type": "facebook",
+    "fb_uid": "61590000000000",
+    "fb_password": "YOUR_FB_PASSWORD_HERE",
+    "fb_2fa_secret": "YOUR_2FA_SECRET_OPTIONAL",
+    "dola_cookie": "session_id=...; passport_csrf_token=...;",
+    "proxy": "http://user:pass@ip:port",
+    "status": "ready",
+    "credits_left": 100
+  },
+  {
+    "id": "acc_02",
+    "name": "Dola Account 02",
+    "type": "google",
+    "email": "user@gmail.com",
+    "dola_cookie": "session_id=...; passport_csrf_token=...;",
+    "proxy": "",
+    "status": "ready",
+    "credits_left": 100
+  }
+]

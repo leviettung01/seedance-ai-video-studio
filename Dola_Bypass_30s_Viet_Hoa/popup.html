@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dola 30s Studio Pro - Lê Việt Tùng</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <div class="popup-container">
+    
+    <!-- HEADER -->
+    <header class="header">
+      <div class="brand">
+        <img src="brand-icon.svg" class="avatar-img" alt="Logo">
+        <div class="brand-copy">
+          <h1 class="title">DOLA 30S STUDIO PRO</h1>
+          <span class="version-badge">BẢN QUYỀN: LÊ VIỆT TÙNG</span>
+        </div>
+      </div>
+      <div class="active-badge" id="header-active-account" title="Tài khoản Dola đang kích hoạt">
+        <span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:#34d399;box-shadow:0 0 6px #34d399;"></span>
+        <span id="account-name-badge">Mặc định</span>
+      </div>
+    </header>
+
+    <!-- NAVIGATION TABS -->
+    <nav class="nav-tabs">
+      <button class="nav-btn active" data-tab="tab-generate">🚀 Tạo 30s</button>
+      <button class="nav-btn" data-tab="tab-multi-req">📋 Multi-Req</button>
+      <button class="nav-btn" data-tab="tab-prompts">📝 Prompts</button>
+      <button class="nav-btn" data-tab="tab-accounts">👥 VIA & Nick</button>
+      <button class="nav-btn" data-tab="tab-proxy">🌐 Proxy VPN</button>
+      <button class="nav-btn" data-tab="tab-settings">⚙️ Cài đặt</button>
+      <button class="nav-btn" data-tab="tab-logs">📋 Nhật ký</button>
+    </nav>
+
+    <!-- MAIN CONTENT VIEW -->
+    <main class="main-content">
+
+      <!-- ===================================================================
+           TAB 1: 🚀 TẠO VIDEO 30S (ẢNH THAM CHIẾU + PROMPT GỢI Ý MODEL PRO)
+           =================================================================== -->
+      <section class="tab-content" id="view-generate">
+        <div class="card" style="padding:12px;margin-bottom:12px">
+          <strong>Skill video 30s · Pro native (LeVietTungSkill30s)</strong>
+          <p style="font-size:11px;line-height:1.5">Tự động cài LeVietTungSkill30s cho tài khoản đang mở, chọn Pro và gắn chip Skill. Tối ưu prompt 30s liền mạch và kích hoạt tạo video ngay lập tức.</p>
+          <label style="font-size:11px"><input type="checkbox" id="seedance-auto-skill"> Tự chuẩn bị Skill khi mở chat mới trống</label>
+          <button type="button" class="btn-primary" id="seedance-prepare-skill" style="margin-top:8px;width:100%">Cài Skill &amp; chuẩn bị Pro 30s</button>
+          <div id="seedance-skill-popup-status" style="font-size:11px;margin-top:6px"></div>
+        </div>
+        <!-- Engine Mode Switcher -->
+        <div class="card" style="padding: 6px 10px; margin-bottom: 2px;">
+          <span style="font-size: 10px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 4px;">PHƯƠNG THỨC TẠO VIDEO:</span>
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn-engine-mode active" id="gen-mode-studio" data-engine="studio" style="flex: 1; padding: 6px 6px; font-size: 10.5px; font-weight: 750; border-radius: 7px; border: 1px solid var(--primary); background: rgba(255,126,0,0.18); color: #fbbf24; cursor: pointer; transition: all 0.2s ease;">
+              ⚡ Studio 30s Bypass
+            </button>
+            <button type="button" class="btn-engine-mode" id="gen-mode-agent" data-engine="agent" style="flex: 1; padding: 6px 6px; font-size: 10.5px; font-weight: 750; border-radius: 7px; border: 1px solid rgba(255,255,255,0.12); background: rgba(255,255,255,0.05); color: #94a3b8; cursor: pointer; transition: all 0.2s ease;">
+              🤖 AI Agent Pro (Free Credit)
+            </button>
+          </div>
+          <div id="gen-engine-desc" style="font-size: 9.5px; color: #34d399; margin-top: 4px; font-weight: 600;">
+            ✨ Chế độ Studio 30s: Tạo video 30 giây chất lượng cao nhất với Model Dreamina Seedance 2.5
+          </div>
+        </div>
+
+        <!-- Account / Target Tab Selector -->
+        <div class="card" style="padding: 6px 10px; margin-bottom: 6px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 3px;">
+            <span style="font-size: 10px; font-weight: 750; color: #94a3b8;">🎯 TÀI KHOẢN / TAB THAO TÁC:</span>
+            <div style="display: flex; gap: 4px;">
+              <button type="button" class="btn-mini" id="gen-btn-save-dola-cookie" style="font-size: 9px; padding: 1px 6px; background: rgba(16,185,129,0.2); border-color: rgba(52,211,153,0.4); color: #34d399;" title="Lấy & Lưu Cookies Dola từ Tab này">💾 Lưu Cookies</button>
+              <button type="button" class="btn-mini" id="gen-btn-refresh-tabs" style="font-size: 9px; padding: 1px 6px; background: rgba(56,189,248,0.15); border-color: rgba(56,189,248,0.3); color: #38bdf8;" title="Quét lại các Tab Dola đang mở">🔄 Quét Tab</button>
+            </div>
+          </div>
+          <select id="gen-select-account-tab" class="select-box" style="font-size: 11px; padding: 5px 8px; width: 100%; border-color: rgba(251,191,36,0.3); background: #0b101b; color: #f8fafc;">
+            <option value="active">📍 Tab Đang Mở Hiện Tại</option>
+          </select>
+        </div>
+
+        <!-- Quick Studio Navigation Bar -->
+        <div style="display: flex; gap: 6px; margin-bottom: 8px;">
+          <button type="button" class="btn-secondary" id="btn-open-dola-studio" style="flex: 1; padding: 6px 10px; font-size: 11px; font-weight: 700; color: #fbbf24; border-color: rgba(251,191,36,0.35); background: rgba(255,126,0,0.12); display: flex; align-items: center; justify-content: center; gap: 5px;" title="Vào trang Studio chính thức để bypass 30s với Model Dreamina Seedance 2.5">
+            <span>✨</span> Mở Studio (30s)
+          </button>
+          <button type="button" class="btn-secondary" id="btn-open-dola-chat" style="padding: 6px 10px; font-size: 11px; font-weight: 600; color: #38bdf8;" title="Mở trang Chat AI Agent Pro (Không tốn credit)">
+            💬 Mở Chat (Pro Free)
+          </button>
+        </div>
+
+        <!-- Reference Image Box -->
+        <div class="card" style="padding: 8px 10px;">
+          <div class="card-header" style="margin-bottom: 4px;">
+            <span class="card-title">🖼️ Ảnh Tham Chiếu (Reference Image)</span>
+            <div style="display: flex; gap: 4px;">
+              <input type="file" id="gen-ref-image-input" accept="image/*" style="display: none;">
+              <button type="button" class="btn-mini" id="gen-btn-choose-img">📁 Chọn Ảnh</button>
+              <button type="button" class="btn-mini" id="gen-btn-load-character" title="Nạp nhanvat.png từ local bridge">🧬 Char Sheet</button>
+              <button type="button" class="btn-mini" id="gen-btn-load-product" title="Nạp sanpham.webp từ local bridge">📦 Sản phẩm</button>
+              <button type="button" class="btn-mini" id="gen-btn-attach-ref" title="Gắn ảnh đang có vào composer Dola, không gửi prompt">📎 Gắn vào Dola</button>
+              <button type="button" class="btn-mini" id="gen-btn-clear-img" style="color: #fca5a5; display: none;">✕ Xóa</button>
+            </div>
+          </div>
+          <div id="gen-ref-preview-box" class="empty-state" style="padding: 8px; font-size: 11px; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <span>📸 Chọn hoặc kéo thả ảnh bắt đầu / tham chiếu vào đây</span>
+          </div>
+        </div>
+
+        <!-- Prompt Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">✨ Prompt Tạo Video 30s</span>
+            <div style="display: flex; gap: 4px;">
+              <button type="button" class="btn-mini" id="gen-btn-toggle-pro-presets" style="color: #fbbf24; background: rgba(255,126,0,0.18); border-color: rgba(251,191,36,0.35);">
+                💡 Gợi Ý Model Pro
+              </button>
+              <button type="button" class="btn-mini" id="gen-btn-paste">📋 Dán</button>
+              <button type="button" class="btn-mini" id="gen-btn-clear">Xóa</button>
+            </div>
+          </div>
+
+          <!-- PROMPT GENERATOR FOR MODEL PRO (Collapsible) -->
+          <div id="pro-presets-panel" style="display: none; background: rgba(11,16,27,0.95); border: 1px solid rgba(251,191,36,0.35); border-radius: 8px; padding: 8px; margin-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+              <span style="font-size: 10.5px; font-weight: 800; color: #fbbf24;">⚡ BỘ CÔNG CỤ GỢI Ý PROMPT MODEL PRO</span>
+              <button type="button" class="btn-mini" id="pro-btn-close-panel" style="padding: 1px 6px;">✕</button>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px;">
+              <div>
+                <label style="font-size: 9.5px; color: #94a3b8; display: block; margin-bottom: 2px;">🎬 THỂ LOẠI (GENRE):</label>
+                <select id="pro-select-genre" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="Cinematic 8K Octane Render, ultra-detailed futuristic sci-fi masterpiece">🎬 Điện Ảnh Sci-Fi 8K</option>
+                  <option value="Cyberpunk rainy neon street at night, reflective wet asphalt, glowing holographic ads">🌆 Cyberpunk Mưa Đêm</option>
+                  <option value="Epic 8K drone flythrough above lush tropical mountain waterfall, golden hour sunlight">🚁 Flycam Phong Cảnh 8K</option>
+                  <option value="Hyper-realistic haute couture fashion model portrait, soft studio lighting, Vogue aesthetic">👗 Chân Dung Thời Trang</option>
+                  <option value="Fast motion dynamic car chase on neon highway with smoke and explosive nitrous flare">🏎️ Đua Xe & Hành Động</option>
+                  <option value="Epic mythical fantasy dragon soaring over crystal frozen mountains, magical VFX aurora">🐉 Thần Thoại & Kỹ Xảo VFX</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 9.5px; color: #94a3b8; display: block; margin-bottom: 2px;">🎥 GÓC MÁY (CAMERA):</label>
+                <select id="pro-select-camera" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="dynamic FPV drone swoop camera movement">FPV Drone Bay Lượn</option>
+                  <option value="cinematic dolly zoom with shallow depth of field">Dolly Zoom Điện Ảnh</option>
+                  <option value="smooth 360 orbital camera rotation">Xoay 360 Quanh Chủ Thể</option>
+                  <option value="extreme macro close-up with lens flare">Cận Cảnh Siêu Chi Tiết</option>
+                  <option value="low-angle heroic wide shot">Góc Thấp Hùng Vĩ</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px;">
+              <div>
+                <label style="font-size: 9.5px; color: #94a3b8; display: block; margin-bottom: 2px;">☀️ ÁNH SÁNG (LIGHTING):</label>
+                <select id="pro-select-lighting" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="volumetric sun rays, warm golden hour atmosphere">Tia Nắng Vàng Hoàng Hôn</option>
+                  <option value="cyberpunk dual neon rim lighting, high contrast">Ánh Sáng Neon Rim</option>
+                  <option value="moody dark cinematic atmospheric haze with shadows">Moody Dark Điện Ảnh</option>
+                  <option value="soft diffuse high-end studio box lighting">Studio Softbox Mịn</option>
+                </select>
+              </div>
+
+              <div>
+                <label style="font-size: 9.5px; color: #94a3b8; display: block; margin-bottom: 2px;">⚡ CHUYỂN ĐỘNG (MOTION):</label>
+                <select id="pro-select-motion" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="fluid smooth 60fps cinematic movement">Mượt Mà 60fps Chuẩn Cinema</option>
+                  <option value="dramatic 120fps slow motion detail">Chuyển Động Chậm 120fps</option>
+                  <option value="dynamic hyperlapse time-warp motion">Tua Nhanh Hyperlapse</option>
+                </select>
+              </div>
+            </div>
+
+            <button type="button" class="btn-primary" id="pro-btn-apply" style="padding: 5px 8px; font-size: 11px;">
+              ⚡ Ghép & Áp Dụng Prompt Cho Model Pro
+            </button>
+          </div>
+
+          <textarea 
+            id="gen-prompt-input" 
+            class="input-textarea" 
+            placeholder="Nhập hoặc dán prompt tại đây (Ví dụ: Cinematic shot of a futuristic cyberpunk neon samurai in heavy rain, 8k ultra detailed 30s motion)..."
+            rows="3"
+          ></textarea>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+            <span id="gen-char-count" style="font-size: 10px; color: var(--text-dim);">0 ký tự</span>
+            <button type="button" class="btn-mini" id="gen-btn-sample" style="color: #fed7aa; background: rgba(255,126,0,0.12);">🎲 Prompt Mẫu</button>
+          </div>
+        </div>
+
+        <!-- Configuration Panel FOR STUDIO 30S BYPASS -->
+        <div id="studio-config-panel" class="card" style="padding: 8px 10px;">
+          <!-- Model Video Selector (Dreamina Seedance) -->
+          <div style="margin-bottom: 7px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 10px; font-weight: 700; color: #94a3b8;">✦ MODEL VIDEO (SEEDANCE):</span>
+              <span id="label-current-model" style="font-size: 9.5px; color: #fbbf24; font-weight: 700;">Seedance 2.5 (Tốt nhất)</span>
+            </div>
+            <div class="model-group" id="gen-model-group">
+              <button type="button" class="model-btn active" data-model="2.5" title="Dreamina Seedance 2.5: Tốt nhất, dùng 5x tín dụng, chi tiết cao">✨ 2.5 (Tốt nhất)</button>
+              <button type="button" class="model-btn" data-model="2.0" title="Dreamina Seedance 2.0 Nhanh: Nhanh chóng, chất lượng cao">⚡ 2.0 Nhanh</button>
+              <button type="button" class="model-btn" data-model="1.0" title="Dreamina Seedance 1.0: Đối với video đơn giản">1.0 Cơ bản</button>
+            </div>
+          </div>
+
+          <!-- Aspect Ratio Selector -->
+          <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px; margin-bottom: 7px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 10px; font-weight: 700; color: #94a3b8;">📐 TỶ LỆ KHUNG HÌNH (STUDIO):</span>
+              <span id="label-current-ratio" style="font-size: 9.5px; color: #fbbf24; font-weight: 700;">9:16 (Dọc)</span>
+            </div>
+            <div class="ratio-group" id="gen-ratio-group">
+              <button type="button" class="ratio-btn active" data-ratio="9:16" title="Tỷ lệ 9:16 Chuẩn Dọc (TikTok, Reels, Shorts)">9:16</button>
+              <button type="button" class="ratio-btn" data-ratio="16:9" title="Tỷ lệ 16:9 Chuẩn Ngang (YouTube, TV)">16:9</button>
+              <button type="button" class="ratio-btn" data-ratio="1:1" title="Tỷ lệ 1:1 Vuông (Instagram, Facebook Feed)">1:1</button>
+              <button type="button" class="ratio-btn" data-ratio="3:4" title="Tỷ lệ 3:4 Dọc">3:4</button>
+              <button type="button" class="ratio-btn" data-ratio="4:3" title="Tỷ lệ 4:3 Ngang cổ điển">4:3</button>
+              <button type="button" class="ratio-btn" data-ratio="21:9" title="Tỷ lệ 21:9 Điện Ảnh Siêu Rộng">21:9</button>
+            </div>
+          </div>
+
+          <!-- Video Duration Selector -->
+          <div style="border-top: 1px solid rgba(255,255,255,0.06); padding-top: 6px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+              <span style="font-size: 10px; font-weight: 700; color: #94a3b8;">⏱️ THỜI LƯỢNG VIDEO:</span>
+              <span id="label-current-duration" style="font-size: 9.5px; color: #fbbf24; font-weight: 700;">30 Giây (Bypass Pro)</span>
+            </div>
+            <div class="duration-group" id="gen-duration-group">
+              <button type="button" class="duration-btn" data-duration="10" title="Thời lượng 10 giây">10s</button>
+              <button type="button" class="duration-btn" data-duration="15" title="Thời lượng 15 giây">15s</button>
+              <button type="button" class="duration-btn active" data-duration="30" title="Ép bypass thời lượng 30 giây tối đa">⚡ 30s Bypass</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Configuration Panel FOR AI AGENT PRO (Template Builder) -->
+        <div id="agent-config-panel" class="card" style="display: none; padding: 8px 10px; background: rgba(56,189,248,0.07); border: 1px solid rgba(56,189,248,0.3); border-radius: 8px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <span style="font-size: 10.5px; font-weight: 800; color: #38bdf8;">🤖 CẤU HÌNH AI AGENT PRO</span>
+            <span style="font-size: 9.5px; background: rgba(16,185,129,0.2); color: #34d399; font-weight: 750; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(16,185,129,0.3);">FREE CREDIT</span>
+          </div>
+
+          <!-- Prompt Mode Toggle -->
+          <div style="display: flex; gap: 6px; margin-top: 6px;">
+            <button type="button" class="btn-mini agent-prompt-mode active" id="agent-mode-custom" data-mode="custom" style="flex: 1; padding: 4px 6px; font-size: 10px; font-weight: 700; background: rgba(56,189,248,0.2); border-color: rgba(56,189,248,0.5); color: #38bdf8;">
+              ✏️ Tự Nhập Prompt
+            </button>
+            <button type="button" class="btn-mini agent-prompt-mode" id="agent-mode-template" data-mode="template" style="flex: 1; padding: 4px 6px; font-size: 10px; font-weight: 700; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.12); color: #94a3b8;">
+              📋 Dùng Template Mẫu
+            </button>
+          </div>
+
+          <!-- Custom Mode Info -->
+          <div id="agent-custom-info" style="font-size: 9.5px; color: #94a3b8; margin-top: 5px; line-height: 1.4;">
+            💡 Nhập prompt video ở ô bên trên. Tool sẽ tự thêm cấu trúc Agent vào prompt của bạn.
+          </div>
+
+          <!-- Template Builder Form (hidden by default) -->
+          <div id="agent-template-form" style="display: none; margin-top: 6px;">
+            <!-- Row 1: Video Count + Type -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 5px;">
+              <div>
+                <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">📊 SỐ LƯỢNG VIDEO:</label>
+                <select id="agent-tpl-count" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="1">1 Video</option>
+                  <option value="2">2 Video</option>
+                  <option value="3">3 Video</option>
+                  <option value="4">4 Video</option>
+                  <option value="5">5 Video</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">🎬 LOẠI TẠO:</label>
+                <select id="agent-tpl-type" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="img2video">🖼️ img2video (Từ ảnh)</option>
+                  <option value="text2video">✏️ text2video (Từ văn bản)</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 2: Model + Duration -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 5px;">
+              <div>
+                <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">🤖 MODEL SEEDANCE:</label>
+                <select id="agent-tpl-model" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="2.5 pro">✨ Seedance 2.5 Pro</option>
+                  <option value="2.0">⚡ Seedance 2.0</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">⏱️ THỜI LƯỢNG:</label>
+                <select id="agent-tpl-duration" class="select-box" style="font-size: 10.5px; padding: 4px 6px;">
+                  <option value="15s">15 Giây</option>
+                  <option value="10s">10 Giây</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Row 3: Aspect Ratio -->
+            <div style="margin-bottom: 5px;">
+              <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">📐 TỶ LỆ KHUNG HÌNH:</label>
+              <div style="display: flex; gap: 4px; flex-wrap: wrap;">
+                <button type="button" class="btn-mini agent-tpl-ratio active" data-ratio="9:16" style="padding: 3px 8px; font-size: 9.5px; background: rgba(56,189,248,0.2); border-color: rgba(56,189,248,0.5); color: #38bdf8;">9:16</button>
+                <button type="button" class="btn-mini agent-tpl-ratio" data-ratio="16:9" style="padding: 3px 8px; font-size: 9.5px;">16:9</button>
+                <button type="button" class="btn-mini agent-tpl-ratio" data-ratio="1:1" style="padding: 3px 8px; font-size: 9.5px;">1:1</button>
+                <button type="button" class="btn-mini agent-tpl-ratio" data-ratio="3:4" style="padding: 3px 8px; font-size: 9.5px;">3:4</button>
+                <button type="button" class="btn-mini agent-tpl-ratio" data-ratio="4:3" style="padding: 3px 8px; font-size: 9.5px;">4:3</button>
+                <button type="button" class="btn-mini agent-tpl-ratio" data-ratio="21:9" style="padding: 3px 8px; font-size: 9.5px;">21:9</button>
+              </div>
+            </div>
+
+            <!-- Prompt Video Input -->
+            <div style="margin-bottom: 5px;">
+              <label style="font-size: 9px; color: #94a3b8; display: block; margin-bottom: 2px;">📝 PROMPT VIDEO (nội dung mô tả chuyển động):</label>
+              <textarea id="agent-tpl-prompt" class="input-textarea" placeholder="Ví dụ: Animate from reference storyboard. Fast, snappy continuous motion..." rows="2" style="font-size: 10.5px;"></textarea>
+            </div>
+
+            <!-- Live Preview -->
+            <div style="background: rgba(0,0,0,0.3); border: 1px solid rgba(56,189,248,0.2); border-radius: 6px; padding: 6px 8px; margin-top: 4px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                <span style="font-size: 9px; color: #94a3b8; font-weight: 700;">👁️ XEM TRƯỚC PROMPT:</span>
+                <button type="button" class="btn-mini" id="agent-tpl-copy" style="padding: 1px 6px; font-size: 8.5px; color: #38bdf8;">📋 Copy</button>
+              </div>
+              <div id="agent-tpl-preview" style="font-size: 9.5px; color: #cbd5e1; line-height: 1.4; max-height: 80px; overflow-y: auto; word-break: break-word;"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Button -->
+        <button type="button" class="btn-primary" id="btn-quick-generate">
+          <span>🚀 TẠO VIDEO 30S KHÔNG LOGO</span>
+        </button>
+
+        <!-- Real-time Progress & Stop / Continue Control Card -->
+        <div id="gen-progress-card" class="card" style="display: none; padding: 10px; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(251, 191, 36, 0.35); border-radius: 8px; margin-top: 5px;">
+          <!-- Progress Header: Status text + Percentage Badge -->
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span class="pulsing-dot" style="display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: #fbbf24; box-shadow: 0 0 8px #fbbf24;"></span>
+              <span id="gen-progress-status" style="font-size: 11px; font-weight: 750; color: #f8fafc;">Đang khởi chạy...</span>
+            </div>
+            <span id="gen-progress-percent" style="font-size: 12px; font-weight: 800; color: #fbbf24; background: rgba(251,191,36,0.15); padding: 2px 8px; border-radius: 10px; border: 1px solid rgba(251,191,36,0.3);">0%</span>
+          </div>
+
+          <!-- Progress Bar Track & Fill -->
+          <div style="width: 100%; height: 8px; background: rgba(255,255,255,0.08); border-radius: 4px; overflow: hidden; position: relative; margin-bottom: 8px;">
+            <div id="gen-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff7e00, #fbbf24, #38bdf8); border-radius: 4px; transition: width 0.3s ease; box-shadow: 0 0 10px rgba(251,191,36,0.5);"></div>
+          </div>
+
+          <!-- Progress Meta: Time counter + Stage info -->
+          <div style="display: flex; justify-content: space-between; align-items: center; font-size: 10px; color: #94a3b8; margin-bottom: 8px;">
+            <span id="gen-progress-time">⏱️ 00:00 / ~01:15</span>
+            <span id="gen-progress-stage" style="color: #cbd5e1;">[1/3] Chuẩn bị</span>
+          </div>
+
+          <!-- Control Buttons: Stop / Cancel & Continue -->
+          <div style="display: flex; gap: 6px;">
+            <button type="button" id="btn-cancel-generation" style="flex: 1; padding: 6px 12px; font-size: 11px; font-weight: 700; background: linear-gradient(135deg, #ef4444, #dc2626); color: #fff; border: 1px solid rgba(239,68,68,0.5); border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px;">
+              ⏹️ DỪNG TẠO (HỦY)
+            </button>
+            <button type="button" id="btn-resume-generation" style="display: none; flex: 1; padding: 6px 12px; font-size: 11px; font-weight: 700; background: linear-gradient(135deg, #10b981, #059669); color: #fff; border: 1px solid rgba(16,185,129,0.5); border-radius: 6px; cursor: pointer; align-items: center; justify-content: center; gap: 4px;">
+              ▶️ TIẾP TỤC TẠO
+            </button>
+          </div>
+        </div>
+
+        <!-- Status & Auto-Download Card -->
+        <div class="card" style="padding: 6px 10px; display: flex; align-items: center; justify-content: space-between;">
+          <div style="display: flex; flex-direction: column; gap: 1px;">
+            <span style="font-size: 11px; font-weight: 700; color: #f8fafc;">Tự động tải Master 1080P gốc</span>
+            <span style="font-size: 9.5px; color: #94a3b8;">Lưu trực tiếp video không logo vào Downloads</span>
+          </div>
+          <label class="switch" title="Bật/Tắt Tự động tải">
+            <input type="checkbox" id="gen-toggle-autodownload" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+
+        <!-- Recent Downloads in Session -->
+        <div class="card">
+          <div class="card-header" style="margin-bottom: 4px;">
+            <span class="card-title">🎬 Video Đã Tải Gần Đây</span>
+            <span id="gen-recent-count" style="font-size: 10px; color: var(--accent-gold); font-weight: 700;">0 video</span>
+          </div>
+          <div class="items-list" id="gen-recent-list">
+            <div class="empty-state" style="padding: 10px;">Chưa có video nào được tạo trong phiên này.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 2: 📋 MULTI-REQUEST (DANH SÁCH TẠO TUẦN TỰ PROMPT + ẢNH THAM CHIẾU)
+           =================================================================== -->
+      <section class="tab-content hidden" id="view-multi-req">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📋 Thêm Request Vào Danh Sách (<span id="mreq-total-badge">0</span>)</span>
+            <div style="display: flex; gap: 4px;">
+              <input type="file" id="mreq-file-input" accept=".json, .txt, .csv" style="display: none;">
+              <button type="button" class="btn-mini" id="mreq-btn-import">📁 Nạp File</button>
+              <button type="button" class="btn-mini" id="mreq-btn-clear-all" style="color: #fca5a5;">🗑️ Xóa hết</button>
+            </div>
+          </div>
+
+          <!-- New Request Creator Form -->
+          <div style="background: rgba(11,16,27,0.7); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 6px;">
+            <textarea 
+              id="mreq-input-prompt" 
+              class="input-textarea" 
+              placeholder="Nhập prompt cho request này..."
+              rows="2"
+            ></textarea>
+
+            <div style="display: flex; gap: 6px; align-items: center;">
+              <input type="file" id="mreq-single-img-input" accept="image/*" style="display: none;">
+              <button type="button" class="btn-secondary" id="mreq-btn-add-img" style="flex: 1; font-size: 10.5px; padding: 4px 6px;">
+                🖼️ Đính kèm ảnh tham chiếu
+              </button>
+              <div id="mreq-img-preview-tag" style="display: none; align-items: center; gap: 4px; background: rgba(255,126,0,0.15); border: 1px solid rgba(251,191,36,0.3); padding: 2px 6px; border-radius: 6px; font-size: 10px; color: #fed7aa;">
+                <img id="mreq-thumb-img" src="" style="width: 16px; height: 16px; object-fit: cover; border-radius: 3px;" />
+                <span id="mreq-thumb-name">image.png</span>
+                <span id="mreq-thumb-remove" style="cursor: pointer; font-weight: bold; color: #fca5a5;">✕</span>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 6px; align-items: center; justify-content: space-between; margin-top: 2px;">
+              <span style="font-size: 9.5px; font-weight: 700; color: #94a3b8;">CHẾ ĐỘ CHẠY:</span>
+              <div style="display: flex; gap: 4px;">
+                <button type="button" class="btn-mini mreq-mode-choice active" data-engine="studio" id="mreq-choice-studio" style="padding: 2px 8px; font-size: 9.5px; background: rgba(255,126,0,0.2); border-color: rgba(251,191,36,0.4); color: #fbbf24;">⚡ Studio 30s</button>
+                <button type="button" class="btn-mini mreq-mode-choice" data-engine="agent" id="mreq-choice-agent" style="padding: 2px 8px; font-size: 9.5px; background: rgba(255,255,255,0.05); color: #94a3b8;">🤖 Agent Pro (Free 15s)</button>
+              </div>
+            </div>
+
+            <button type="button" class="btn-primary" id="mreq-btn-add-to-list" style="padding: 6px 10px; font-size: 11.5px;">
+              ➕ Thêm Request Này Vào Hàng Đợi
+            </button>
+          </div>
+        </div>
+
+        <!-- Pipeline Control Bar -->
+        <div class="card" style="padding: 8px 10px;">
+          <div style="display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;">
+            <button type="button" class="btn-primary" id="mreq-btn-run-pipeline" style="flex: 1; padding: 7px 8px; font-size: 11px;">
+              🚀 Chạy Tuần Tự (1 Tab)
+            </button>
+            <button type="button" class="btn-primary" id="mreq-btn-run-multithread" style="flex: 1; padding: 7px 8px; font-size: 11px; background: linear-gradient(135deg, #10b981, #059669); border: 1px solid rgba(52,211,153,0.4); box-shadow: 0 4px 12px rgba(16,185,129,0.35);">
+              ⚡ Đa Luồng (Mọi Tab/Acc)
+            </button>
+            <button type="button" class="btn-secondary" id="mreq-btn-pause-pipeline" style="flex: 1; font-size: 11px; padding: 7px 8px; display: none;">
+              ⏸️ Tạm Dừng
+            </button>
+            <button type="button" class="btn-danger" id="mreq-btn-stop-pipeline" style="flex: 1; font-size: 11px; padding: 7px 8px; display: none;">
+              ⏹️ Dừng
+            </button>
+          </div>
+
+          <div style="display: flex; justify-content: space-between; font-size: 10px; color: #94a3b8; margin-bottom: 4px;">
+            <span id="mreq-progress-label">Tiến độ: 0 / 0 Request</span>
+            <span id="mreq-progress-percent">0%</span>
+          </div>
+          <div style="width: 100%; height: 5px; background: rgba(255,255,255,0.08); border-radius: 3px; overflow: hidden;">
+            <div id="mreq-progress-bar" style="width: 0%; height: 100%; background: linear-gradient(90deg, #ff7e00, #fbbf24); transition: width 0.3s ease;"></div>
+          </div>
+        </div>
+
+        <!-- Requests List -->
+        <div class="card">
+          <div class="filter-pills-row">
+            <button type="button" class="filter-pill active" data-mreq-filter="all">Tất cả (<span id="mreq-f-all">0</span>)</button>
+            <button type="button" class="filter-pill" data-mreq-filter="queued">⚪ Chờ chạy (<span id="mreq-f-queued">0</span>)</button>
+            <button type="button" class="filter-pill" data-mreq-filter="done">✅ Đã xong (<span id="mreq-f-done">0</span>)</button>
+          </div>
+
+          <div class="items-list" id="mreq-render-container">
+            <div class="empty-state">Chưa có request nào. Bấm "Thêm Request" ở trên để tạo danh sách!</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 3: 📝 QUẢN LÝ PROMPTS HÀNG LOẠT
+           =================================================================== -->
+      <section class="tab-content hidden" id="view-prompts">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📝 Nạp Prompt Hàng Loạt (<span id="prompts-total-badge">0</span>)</span>
+            <div style="display: flex; gap: 4px;">
+              <input type="file" id="prompts-file-input" accept=".txt, .csv, .json" style="display: none;">
+              <button type="button" class="btn-mini" id="prompts-btn-upload">📁 Chọn File</button>
+              <button type="button" class="btn-mini" id="prompts-btn-clear" style="color: #fca5a5;">🗑️ Xóa hết</button>
+            </div>
+          </div>
+          <textarea 
+            id="prompts-batch-textarea" 
+            class="input-textarea" 
+            placeholder="Dán danh sách prompt vào đây (mỗi dòng 1 prompt hoặc CSV)..."
+            rows="3"
+          ></textarea>
+          <button type="button" class="btn-primary" id="prompts-btn-add" style="margin-top: 6px; padding: 7px;">
+            ➕ Thêm Prompt vào Danh Sách
+          </button>
+        </div>
+
+        <!-- Bulk Controls Bar -->
+        <div class="card" style="padding: 8px 10px; display: flex; flex-direction: column; gap: 6px;">
+          <div style="display: flex; align-items: center; justify-content: space-between;">
+            <div style="display: flex; flex-direction: column; gap: 1px;">
+              <span style="font-size: 11px; font-weight: 700; color: #fed7aa;">📦 Chế độ Tải Hàng Loạt (Bulk ZIP)</span>
+              <span style="font-size: 9.5px; color: #94a3b8;">Hiện thanh Dock tải ZIP nổi trên trang Dola</span>
+            </div>
+            <label class="switch" title="Bật/Tắt Bulk Download Mode">
+              <input type="checkbox" id="prompts-toggle-bulkmode">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div style="display: flex; gap: 6px;">
+            <button type="button" class="btn-secondary" id="prompts-btn-sync-click" style="flex: 1; font-size: 10.5px; padding: 5px 6px;" title="Bật chế độ đồng bộ click tạo video qua tất cả các tab đang mở">
+              ⚡ Click Đồng Bộ Tab
+            </button>
+            <button type="button" class="btn-secondary" id="prompts-btn-autoscroll" style="flex: 1; font-size: 10.5px; padding: 5px 6px; background: rgba(255,126,0,0.15); border-color: rgba(251,191,36,0.4); color: #fed7aa;" title="Tự động cuộn chat ngược lên để trích xuất tất cả video cũ trong chat">
+              📜 Cuộn Bắt Video Cũ
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter Pills & Prompts List -->
+        <div class="card">
+          <div class="filter-pills-row">
+            <button type="button" class="filter-pill active" data-filter="all">Tất cả (<span id="filter-count-all">0</span>)</button>
+            <button type="button" class="filter-pill" data-filter="queued">⚪ Chờ chạy (<span id="filter-count-queued">0</span>)</button>
+            <button type="button" class="filter-pill" data-filter="done">✅ Đã xong (<span id="filter-count-done">0</span>)</button>
+          </div>
+
+          <div class="items-list" id="prompts-render-container">
+            <div class="empty-state" id="prompts-empty-box">📁 Bấm vào đây để chọn file prompt (.txt, .csv)...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 4: 👥 VIA FACEBOOK & QUẢN LÝ TÀI KHOẢN
+           =================================================================== -->
+      <section class="tab-content hidden" id="view-accounts">
+        <!-- Auto Login VIA Facebook Card -->
+        <div class="card" style="border-color: rgba(37,99,235,0.4); background: rgba(17,24,39,0.92);">
+          <div class="card-header">
+            <span class="card-title" style="color: #60a5fa;">⚡ Đăng Nhập VIA Facebook</span>
+            <span style="font-size: 9.5px; font-weight: 700; color: #93c5fd; background: rgba(37,99,235,0.2); padding: 1px 6px; border-radius: 4px;">UID|Pass|2FA</span>
+          </div>
+
+          <textarea 
+            id="via-input-text" 
+            class="input-textarea" 
+            placeholder="Dán chuỗi VIA (UID|Pass|2FA hoặc Cookie c_user=...; xs=...)"
+            rows="2"
+            style="border-color: rgba(59,130,246,0.3);"
+          ></textarea>
+
+          <div id="via-2fa-info" style="display: none; margin-top: 6px; padding: 6px 10px; background: rgba(37,99,235,0.15); border: 1px solid rgba(59,130,246,0.3); border-radius: 8px; font-size: 11px; color: #93c5fd; display: none; justify-content: space-between; align-items: center;">
+            <span>Mã 2FA: <b id="via-2fa-code" style="color: #fef08a; font-size: 13px; font-family: monospace;">------</b></span>
+            <button type="button" class="btn-mini" id="via-btn-copy-2fa" style="font-size: 9.5px; padding: 2px 8px; background: #2563eb; color: #fff;">📋 Copy</button>
+          </div>
+
+          <button type="button" class="btn-primary" id="via-btn-auto-login" style="margin-top: 6px; background: linear-gradient(135deg, #2563eb, #1d4ed8, #0284c7); box-shadow: 0 4px 14px rgba(37,99,235,0.4);">
+            🚀 ĐĂNG NHẬP VIA FACEBOOK
+          </button>
+          <div style="margin-top: 5px; font-size: 10px; color: #94a3b8; text-align: center; line-height: 1.4;">
+            💡 Tự động đăng nhập FB. Sau khi FB nạp xong, bạn chỉ cần qua tab Dola bấm "Đăng nhập bằng Facebook". Không can thiệp hay xóa profile khác.
+          </div>
+        </div>
+
+        <!-- DOLA COOKIES EXTRACTOR & SAVER CARD -->
+        <div class="card" style="border: 1px solid rgba(251,191,36,0.45); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(30,41,59,0.92)); box-shadow: 0 4px 20px rgba(251,191,36,0.12);">
+          <div class="card-header" style="margin-bottom: 6px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 15px;">🍪</span>
+              <span class="card-title" style="color: #fbbf24; font-size: 11.5px; font-weight: 800; letter-spacing: 0.2px;">LẤY & LƯU COOKIES TÀI KHOẢN DOLA</span>
+            </div>
+            <span class="version-badge" style="background: rgba(251,191,36,0.18); color: #fbbf24; border-color: rgba(251,191,36,0.4); font-size: 9px;">1-CLICK SYNC</span>
+          </div>
+
+          <!-- Target Tab & Account Name Inputs -->
+          <div style="display: flex; flex-direction: column; gap: 6px; margin-bottom: 8px;">
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8;">🎯 TAB DOLA CẦN LẤY COOKIES:</label>
+                <button type="button" class="btn-mini" id="dola-btn-scan-tabs" style="font-size: 9px; padding: 1px 6px; background: rgba(56,189,248,0.15); border-color: rgba(56,189,248,0.3); color: #38bdf8;">🔄 Quét Tab</button>
+              </div>
+              <select id="dola-select-tabs" class="select-box" style="font-size: 11px; padding: 5px 8px; width: 100%; border-color: rgba(251,191,36,0.3); background: #0b101b; color: #f8fafc;">
+                <option value="auto">🔍 Tự động nhận diện Tab Dola</option>
+              </select>
+            </div>
+
+            <div>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8;">🏷️ TÊN TÀI KHOẢN:</label>
+                <button type="button" class="btn-mini" id="dola-btn-auto-name" style="font-size: 9px; padding: 1px 6px; background: rgba(16,185,129,0.15); border-color: rgba(52,211,153,0.3); color: #34d399;">🔍 Nhận diện UID</button>
+              </div>
+              <input type="text" id="dola-input-acc-name" class="input-text" placeholder="Ví dụ: FB_61594007764718 hoặc Nick_1..." style="font-size: 11px; padding: 6px 8px;">
+            </div>
+          </div>
+
+          <!-- Main Primary Action Button -->
+          <button type="button" class="btn-primary" id="dola-btn-extract-save" style="width: 100%; padding: 8px 12px; font-size: 11.5px; font-weight: 800; background: linear-gradient(135deg, #ff7e00, #fbbf24); color: #000; border: none; box-shadow: 0 4px 14px rgba(255,126,0,0.35); margin-bottom: 6px; cursor: pointer;">
+            💾 LẤY & LƯU SESSION DOLA NGAY
+          </button>
+
+          <!-- Status Box -->
+          <div id="dola-extract-status-box" style="padding: 6px 8px; background: rgba(11,16,27,0.75); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; font-size: 9.5px; color: #94a3b8; margin-bottom: 8px; line-height: 1.4;">
+            <span id="dola-status-text">⏳ Bấm nút trên để trích xuất toàn bộ cookies & session Dola đang mở.</span>
+          </div>
+
+          <!-- Quick Actions Grid -->
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-bottom: 6px;">
+            <button type="button" class="btn-secondary" id="dola-btn-copy-header" style="font-size: 10px; padding: 5px 6px; color: #38bdf8; border-color: rgba(56,189,248,0.3);" title="Sao chép chuỗi cookies dạng text name=val; name2=val2">
+              📋 Copy Cookies
+            </button>
+            <button type="button" class="btn-secondary" id="dola-btn-copy-json" style="font-size: 10px; padding: 5px 6px; color: #a78bfa; border-color: rgba(167,139,250,0.3);" title="Sao chép mảng JSON cookies">
+              📋 Copy JSON
+            </button>
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+            <button type="button" class="btn-secondary" id="dola-btn-export-file" style="font-size: 10px; padding: 5px 6px; color: #34d399; border-color: rgba(52,211,153,0.3);" title="Tải về file JSON cookies">
+              📥 Xuất File JSON
+            </button>
+            <button type="button" class="btn-secondary" id="dola-btn-sync-desktop" style="font-size: 10px; padding: 5px 6px; color: #fbbf24; border-color: rgba(251,191,36,0.35); background: rgba(255,126,0,0.12);" title="Đẩy cookies trực tiếp sang Tool Seedance Studio (Port 8899)">
+              ⚡ Đồng Bộ Tool 8899
+            </button>
+          </div>
+        </div>
+
+        <!-- Multi-Account Opener Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">👥 Mở Nhiều Tab Tài Khoản Độc Lập</span>
+            <button type="button" class="btn-mini" id="acc-btn-capture" style="color: #34d399; background: rgba(16, 185, 129, 0.15);">
+              + Bắt Tab Hiện Tại
+            </button>
+          </div>
+          
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="number" id="acc-input-tab-count" class="input-text" min="1" step="1" value="2" style="width: 70px; text-align: center;" aria-label="Số tab cần mở">
+            <button type="button" class="btn-primary" id="acc-btn-open-tabs" style="flex: 1; padding: 7px 10px;">
+              🚀 Mở Các Tab Tài Khoản
+            </button>
+          </div>
+          <div id="acc-open-status" style="font-size: 10px; color: #94a3b8; margin-top: 5px;">
+            Đang kiểm tra tài khoản khả dụng...
+          </div>
+        </div>
+
+        <!-- Import Cookies Card -->
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">➕ Nhập Cookies / Profile Mới</span>
+            <div style="display: flex; gap: 4px;">
+              <input type="file" id="acc-file-input" multiple accept=".json, .txt, .netscape, .csv" style="display: none;">
+              <button type="button" class="btn-mini" id="acc-btn-import-file">📁 Nạp File</button>
+              <button type="button" class="btn-mini" id="acc-btn-export-file" style="color: #38bdf8;" title="Xuất tất cả tài khoản đã lưu ra file JSON">📤 Xuất File</button>
+              <button type="button" class="btn-mini" id="acc-btn-clear-all" style="color: #fca5a5;">🗑️ Xóa hết</button>
+            </div>
+          </div>
+
+          <!-- 2-Way Desktop Sync Bar (Port 8899) -->
+          <div style="margin-bottom: 8px; padding: 7px 8px; border-radius: 6px; background: rgba(251,191,36,0.08); border: 1px solid rgba(251,191,36,0.25);">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px;">
+              <span style="font-size: 10px; font-weight: 750; color: #fbbf24;">⚡ ĐỒNG BỘ 2 CHIỀU VỚI TOOL (PORT 8899)</span>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <button type="button" class="btn-primary" id="acc-btn-fetch-desktop" style="font-size: 10px; padding: 6px 8px; font-weight: bold; background: linear-gradient(135deg, #10b981, #059669); border: none; color: #fff; cursor: pointer;" title="Lấy toàn bộ cookies tài khoản từ Tool Seedance Studio (Port 8899) nạp trực tiếp vào Extension">
+                ⬇️ LẤY HẾT TỪ TOOL
+              </button>
+              <button type="button" class="btn-secondary" id="acc-btn-push-desktop" style="font-size: 10px; padding: 6px 8px; font-weight: bold; color: #fbbf24; border-color: rgba(251,191,36,0.5); background: rgba(251,191,36,0.12); cursor: pointer;" title="Đẩy toàn bộ tài khoản trong Extension sang Tool Seedance Studio (Port 8899)">
+                ⬆️ ĐẨY HẾT SANG TOOL
+              </button>
+            </div>
+            <div id="acc-sync-desktop-status" style="font-size: 9px; color: #94a3b8; margin-top: 4px; line-height: 1.3;">
+              💡 Bấm <b>'LẤY HẾT TỪ TOOL'</b> để nạp 1-click tất cả tài khoản từ Studio vào Extension.
+            </div>
+          </div>
+          
+          <input type="text" id="acc-input-name" class="input-text" placeholder="Tên tài khoản (tự sinh nếu để trống)" style="margin-bottom: 4px;">
+          <textarea 
+            id="acc-input-cookies" 
+            class="input-textarea" 
+            placeholder="Dán mảng JSON cookies, định dạng Netscape hoặc chuỗi c_user=...; xs=..."
+            rows="2"
+          ></textarea>
+          <button type="button" class="btn-secondary" id="acc-btn-save-profile" style="margin-top: 4px; width: 100%;">
+            ➕ Lưu Tài Khoản Vào Danh Sách
+          </button>
+        </div>
+
+        <!-- Saved Profiles List -->
+        <div class="card">
+          <div class="card-header" style="margin-bottom: 4px;">
+            <span class="card-title">📋 Danh Sách Tài Khoản Đã Lưu (<span id="acc-total-badge">0</span>)</span>
+          </div>
+          <div class="items-list" id="acc-render-container">
+            <div class="empty-state">Chưa có tài khoản nào được lưu.</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 5: ⚙️ CÀI ĐẶT BYPASS
+           =================================================================== -->
+      <section class="tab-content hidden" id="view-settings">
+        <div class="card">
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">💎 Trạng Thái Bản Quyền</div>
+              <div class="setting-desc">Kích hoạt vĩnh viễn: LÊ VIỆT TÙNG (0915967790)</div>
+            </div>
+            <span style="font-size: 10.5px; font-weight: 800; color: #fbbf24;">PRO VIP</span>
+          </div>
+
+          <div class="setting-row" style="flex-direction: column; align-items: flex-start; gap: 4px;">
+            <div class="setting-label">⏱️ Ép Thời Lượng Tạo Video (Bypass Duration)</div>
+            <select id="set-select-duration" class="select-box">
+              <option value="60">60 Giây (Ultra HD VIP)</option>
+              <option value="30" selected>30 Giây (Max HD - Khuyên Dùng)</option>
+              <option value="25">25 Giây (Super HD)</option>
+              <option value="20">20 Giây (Pro HD)</option>
+              <option value="15">15 Giây (Fast HD)</option>
+              <option value="10">10 Giây (Mặc định)</option>
+            </select>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">🔄 Tự Động Luân Chuyển Tài Khoản</div>
+              <div class="setting-desc">Tự đổi tab/profile khi hết hạn mức ngày</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="set-chk-autorotate" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">⏩ Tự Động Chuyển Prompt Tiếp Theo</div>
+              <div class="setting-desc">Đánh dấu xong và lấy prompt tiếp khi gửi</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="set-chk-autonext" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">📥 Tự Động Tải Video Không Logo</div>
+              <div class="setting-desc">Bắt luồng Master 1080P sạch logo và lưu về máy</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="set-chk-autodownload" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">⚡ Chỉ Tải Lẻ Video Vừa Tạo (Không ZIP)</div>
+              <div class="setting-desc">Chỉ tải các video mới vừa tạo trong phiên, bỏ qua video cũ, không nén ZIP</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="set-chk-only-new-videos" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">🔘 Nút "Tải Video Này" Trên Khung Video</div>
+              <div class="setting-desc">Hiển thị nút màu xanh lá tải trực tiếp video không logo ở góc video</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="set-chk-show-video-btn" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">📦 Thanh Dock Tải Hàng Loạt Trên Web</div>
+              <div class="setting-desc">Hiển thị thanh công cụ tải video nổi trên trang Dola</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="set-chk-bulkmode">
+              <span class="slider"></span>
+            </label>
+          </div>
+
+          <div class="setting-row">
+            <div>
+              <div class="setting-label">🛡️ Bộ Lọc Từ Khóa An Toàn</div>
+              <div class="setting-desc">Tự động làm sạch prompt tránh vi phạm chính sách</div>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="set-chk-safety" checked>
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 6: 📋 NHẬT KÝ HỆ THỐNG
+           =================================================================== -->
+      <section class="tab-content hidden" id="view-logs">
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">📋 Nhật Ký Hoạt Động Trực Tiếp</span>
+            <div style="display: flex; gap: 4px;">
+              <button type="button" class="btn-mini" id="logs-btn-copy">📋 Sao chép</button>
+              <button type="button" class="btn-mini" id="logs-btn-clear" style="color: #fca5a5;">🗑️ Xóa</button>
+            </div>
+          </div>
+          <div class="terminal-box" id="logs-terminal-container">
+            <div class="log-entry">
+              <span class="log-time">[00:00:00]</span>
+              <span class="log-tag success">[READY]</span>
+              <span>Dola 30s Studio Pro đã khởi động thành công.</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[00:00:00]</span>
+              <span class="log-tag success">[VIP]</span>
+              <span>Bản quyền độc quyền: LÊ VIỆT TÙNG (Zalo: 0915967790).</span>
+            </div>
+            <div class="log-entry">
+              <span class="log-time">[00:00:00]</span>
+              <span class="log-tag info">[ENGINE]</span>
+              <span>Auto VIA FB Login, Multi-Request Pipeline & Master Downloader sẵn sàng.</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================================================================
+           TAB 7: 🌐 PROXY VPN - QUẢN LÝ PROXY THEO TÀI KHOẢN / PROFILE
+           =================================================================== -->
+      <section class="tab-content hidden" id="view-proxy">
+        <!-- Live IP Status Card -->
+        <div class="card" style="border: 1px solid rgba(16,185,129,0.35); background: linear-gradient(135deg, rgba(15,23,42,0.95), rgba(6,78,59,0.25)); box-shadow: 0 4px 20px rgba(16,185,129,0.12);">
+          <div class="card-header" style="margin-bottom: 6px;">
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 16px;">🌐</span>
+              <span class="card-title" style="color: #34d399; font-size: 11.5px; font-weight: 800;">TRẠNG THÁI IP TRÌNH DUYỆT NÀY</span>
+            </div>
+            <span id="proxy-status-badge" class="version-badge" style="background: rgba(16,185,129,0.2); color: #34d399; border-color: rgba(52,211,153,0.4); font-size: 9.5px;">ĐANG KIỂM TRA</span>
+          </div>
+
+          <div style="display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; background: rgba(11,16,27,0.7); border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); margin-bottom: 8px;">
+            <div>
+              <div style="font-size: 9.5px; color: #94a3b8; font-weight: 700;">IP NGOÀI (PUBLIC IP):</div>
+              <div id="proxy-current-ip-display" style="font-size: 15px; font-weight: 800; color: #f8fafc; font-family: monospace; margin-top: 2px;">
+                Đang nạp IP...
+              </div>
+              <div id="proxy-geo-display" style="font-size: 10px; color: #38bdf8; margin-top: 2px;">
+                Đang xác định vị trí...
+              </div>
+            </div>
+            <button type="button" class="btn-primary" id="proxy-btn-test-live" style="padding: 6px 12px; font-size: 10.5px; font-weight: 750; background: linear-gradient(135deg, #10b981, #059669); border: none; box-shadow: 0 2px 10px rgba(16,185,129,0.3); cursor: pointer;" title="Kiểm tra IP thật của Chrome đang kết nối">
+              🧪 Test Live IP
+            </button>
+          </div>
+        </div>
+
+        <!-- Proxy Configuration Card -->
+        <div class="card" style="border: 1px solid rgba(251,191,36,0.35); background: rgba(17,24,39,0.92);">
+          <div class="card-header" style="margin-bottom: 8px;">
+            <span class="card-title" style="color: #fbbf24; font-size: 11.5px; font-weight: 800;">⚙️ GÁN PROXY CHO TRÌNH DUYỆT NÀY</span>
+            <div style="display: flex; align-items: center; gap: 6px;">
+              <span style="font-size: 10px; color: #94a3b8; font-weight: 700;">Chế độ Proxy:</span>
+              <label class="switch" title="Bật hoặc Tắt Proxy cho Chrome này">
+                <input type="checkbox" id="proxy-toggle-enabled" checked>
+                <span class="slider"></span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Master Mode Badge -->
+          <div id="proxy-mode-badge-box" style="margin-bottom: 10px; padding: 6px 10px; border-radius: 6px; background: rgba(16,185,129,0.15); border: 1px solid rgba(16,185,129,0.35); display: flex; justify-content: space-between; align-items: center;">
+            <span id="proxy-mode-badge-text" style="font-size: 10.5px; font-weight: 800; color: #34d399;">🟢 CHẾ ĐỘ PROXY: ĐANG BẬT</span>
+            <button type="button" class="btn-mini" id="proxy-btn-quick-toggle" style="font-size: 9.5px; padding: 2px 8px; background: rgba(239,68,68,0.2); color: #fca5a5; border-color: rgba(239,68,68,0.4);">Tắt Proxy</button>
+          </div>
+
+          <!-- Proxy Source Selector (VPN Tool vs Custom) -->
+          <div style="margin-bottom: 10px;">
+            <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 4px;">CHỌN NGUỒN PROXY:</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+              <button type="button" class="btn-mini active" id="proxy-src-btn-vpn" style="padding: 6px 4px; font-size: 10px; font-weight: 800; background: rgba(56,189,248,0.2); border: 1px solid #38bdf8; color: #38bdf8;">
+                ⚡ Tool VPN2proxy
+              </button>
+              <button type="button" class="btn-mini" id="proxy-src-btn-custom" style="padding: 6px 4px; font-size: 10px; font-weight: 800; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); color: #94a3b8;">
+                🌐 Proxy Ngoài Riêng
+              </button>
+            </div>
+          </div>
+
+          <!-- CONTAINER 1: Tool VPN2proxy Selection -->
+          <div id="proxy-section-vpn" style="margin-bottom: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3px;">
+              <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8;">⚡ CỔNG PROXY VPN (KHOI_DONG_TOOL_PROXY.bat):</label>
+              <button type="button" class="btn-mini" id="proxy-btn-refresh-vpn-list" style="font-size: 9px; padding: 1px 6px; background: rgba(251,191,36,0.15); border-color: rgba(251,191,36,0.35); color: #fbbf24;">🔄 Quét Cổng Tool</button>
+            </div>
+            <select id="proxy-select-vpn-port" class="select-box" style="font-size: 11px; padding: 6px 8px; width: 100%; border-color: rgba(251,191,36,0.35); background: #0b101b; color: #f8fafc;">
+              <option value="">Bấm Quét Cổng Tool hoặc Đồng Bộ Từ Tool 8899</option>
+            </select>
+            <label style="display:block;margin-top:8px;font-size:11px;color:#cbd5e1;">
+              <input type="checkbox" id="proxy-auto-rotate-5m" checked> Tự động xoay IP mỗi 5 phút
+            </label>
+            <div id="proxy-rotation-status" style="font-size:10px;color:#94a3b8;margin-top:4px;">Chờ kết nối VPN2Proxy.</div>
+            <div style="font-size:10px;color:#94a3b8;">Lịch xoay dùng chung theo cổng. Xoay tunnel có thể ngắt kết nối đang truyền dữ liệu.</div>
+          </div>
+
+          <!-- CONTAINER 2: Custom Proxy Inputs -->
+          <div id="proxy-section-custom" style="display: none; margin-bottom: 8px;">
+            <!-- Protocol & Account Name -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+              <div>
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 2px;">LOẠI PROXY:</label>
+                <select id="proxy-select-scheme" class="select-box" style="font-size: 11px; padding: 5px 8px; width: 100%;">
+                  <option value="http" selected>HTTP / HTTPS Tunnel</option>
+                  <option value="socks5">SOCKS5 Tunnel</option>
+                </select>
+              </div>
+              <div>
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 2px;">TÊN TÀI KHOẢN GẮN KÈM:</label>
+                <input type="text" id="proxy-input-acc-name" class="input-text" placeholder="Ví dụ: FB_61594490625584..." style="font-size: 11px; padding: 5px 8px;">
+              </div>
+            </div>
+
+            <!-- Proxy Details Inputs -->
+            <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 8px; margin-bottom: 6px;">
+              <div>
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 2px;">HOST / IP:</label>
+                <input type="text" id="proxy-input-host" class="input-text" value="127.0.0.1" placeholder="127.0.0.1" style="font-size: 11px; padding: 5px 8px; font-family: monospace;">
+              </div>
+              <div>
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 2px;">CỔNG (PORT):</label>
+                <input type="number" id="proxy-input-port" class="input-text" value="10000" placeholder="10000" style="font-size: 11px; padding: 5px 8px; font-family: monospace;">
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 6px;">
+              <div>
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 2px;">TÀI KHOẢN (USER):</label>
+                <input type="text" id="proxy-input-user" class="input-text" value="admin" placeholder="admin" style="font-size: 11px; padding: 5px 8px;">
+              </div>
+              <div>
+                <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 2px;">MẬT KHẨU (PASS):</label>
+                <input type="password" id="proxy-input-pass" class="input-text" value="admin123" placeholder="admin123" style="font-size: 11px; padding: 5px 8px;">
+              </div>
+            </div>
+
+            <!-- One line fast paste -->
+            <div style="margin-bottom: 6px;">
+              <label style="font-size: 9.5px; font-weight: 750; color: #94a3b8; display: block; margin-bottom: 2px;">DÁN NHANH PROXY NGOÀI (IP:Port hoặc IP:Port:User:Pass):</label>
+              <input type="text" id="proxy-input-raw" class="input-text" placeholder="123.45.67.89:8080 hoặc 123.45.67.89:8080:user:pass" style="font-size: 11px; padding: 5px 8px; font-family: monospace;">
+            </div>
+          </div>
+
+          <!-- Main Actions -->
+          <button type="button" class="btn-primary" id="proxy-btn-apply" style="width: 100%; padding: 8px 12px; font-size: 11.5px; font-weight: 800; background: linear-gradient(135deg, #ff7e00, #fbbf24); color: #000; border: none; box-shadow: 0 4px 14px rgba(255,126,0,0.35); margin-bottom: 6px; cursor: pointer;">
+            ⚡ ÁP DỤNG PROXY CHO TRÌNH DUYỆT NÀY
+          </button>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px;">
+            <button type="button" class="btn-secondary" id="proxy-btn-sync-tool" style="font-size: 10px; padding: 6px 8px; color: #38bdf8; border-color: rgba(56,189,248,0.35);" title="Lấy cấu hình Bật/Tắt & Proxy từ Tool Seedance Studio (Port 8899)">
+              🔄 Đồng Bộ Từ Tool 8899
+            </button>
+            <button type="button" class="btn-secondary" id="proxy-btn-disable" style="font-size: 10px; padding: 6px 8px; color: #fca5a5; border-color: rgba(239,68,68,0.35);" title="Hủy kích hoạt proxy, đưa Chrome về IP mạng thật">
+              ❌ Tắt Proxy (Về Mạng Gốc)
+            </button>
+          </div>
+
+          <div id="proxy-apply-status-text" style="font-size: 9.5px; color: #94a3b8; margin-top: 6px; text-align: center; line-height: 1.4;">
+            💡 Có thể lấy Proxy từ Tool VPN2proxy hoặc nhập Proxy ngoài riêng. Dù mở bằng tool hay mở thủ công, proxy này đều tự kích hoạt.
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="app-footer">
+      <div class="footer-social-row">
+        <a class="footer-btn footer-btn-zalo" id="footer-link-zalo" href="https://zalo.me/0915967790" target="_blank" rel="noopener noreferrer">
+          💬 Zalo: 0915967790
+        </a>
+        <a class="footer-btn footer-btn-fb" id="footer-link-fb" href="https://www.facebook.com/tungbinh.38/" target="_blank" rel="noopener noreferrer">
+          🌐 Facebook: Lê Việt Tùng
+        </a>
+      </div>
+      <div class="footer-credit">
+        Phát triển & Sở hữu bởi <strong>LÊ VIỆT TÙNG</strong> • Hotline / Zalo: <strong>0915967790</strong>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script src="popup.js"></script>
+  <script src="skill-pro-popup.js"></script>
+</body>
+</html>

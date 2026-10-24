@@ -1,0 +1,140 @@
+{
+    "manifest_version": 3,
+    "name": "Dola 30s Bypass Pro - Lê Việt Tùng",
+    "version": "2.1.2",
+    "description": "Studio Dola: quản lý tài khoản, cài Skill và chọn Pro 30s, tải video và ZIP. Thời lượng/model theo kết quả máy chủ.",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "permissions": [
+        "sidePanel",
+        "storage",
+        "cookies",
+        "downloads",
+        "offscreen",
+        "tabs",
+        "webNavigation",
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess",
+        "notifications",
+        "scripting",
+        "proxy",
+        "webRequest",
+        "webRequestAuthProvider",
+        "alarms"
+    ],
+    "side_panel": {
+        "default_path": "popup.html"
+    },
+    "host_permissions": [
+        "*://*.dola.com/*",
+        "*://*.doubao.com/*",
+        "*://*.seaart.ai/*",
+        "*://*.byteintl.com/*",
+        "*://*.ibytedtos.com/*",
+        "https://dola.com/*",
+        "https://www.dola.com/*",
+        "https://doubao.com/*",
+        "https://www.doubao.com/*",
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.dola.com/*",
+                "*://*.doubao.com/*",
+                "*://*.seaart.ai/*",
+                "https://dola.com/*",
+                "https://www.dola.com/*",
+                "https://doubao.com/*",
+                "https://www.doubao.com/*"
+            ],
+            "js": [
+                "image-attachment-main.js",
+                "without watermark/extractor.js",
+                "inject.js"
+            ],
+            "run_at": "document_start",
+            "world": "MAIN"
+        },
+        {
+            "matches": [
+                "*://*.dola.com/*",
+                "*://*.doubao.com/*",
+                "*://*.seaart.ai/*",
+                "https://dola.com/*",
+                "https://www.dola.com/*",
+                "https://doubao.com/*",
+                "https://www.doubao.com/*"
+            ],
+            "css": [
+                "dock-polish.css"
+            ],
+            "js": [
+                "content.js",
+                "raw-watermark-free-downloader.js",
+                "site-polish.js",
+                "verified-image-upload-content.js",
+                "skill-pro-content.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://*.facebook.com/*",
+                "*://facebook.com/*"
+            ],
+            "js": [
+                "fb_popup_autoclick.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Dola 30s Studio Pro - Lê Việt Tùng",
+        "default_icon": {
+            "16": "icon16.png",
+            "48": "icon48.png",
+            "128": "icon128.png"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "inject.js",
+                "popup.html",
+                "popup.js",
+                "popup.css",
+                "brand-icon.svg",
+                "icon16.png",
+                "icon48.png",
+                "icon128.png"
+            ],
+            "matches": [
+                "*://*.dola.com/*",
+                "*://*.doubao.com/*",
+                "*://*.seaart.ai/*",
+                "https://dola.com/*",
+                "https://www.dola.com/*",
+                "https://doubao.com/*",
+                "https://www.doubao.com/*"
+            ]
+        },
+        {
+            "resources": [
+                "skills/video_30s/SKILL.md"
+            ],
+            "matches": [
+                "https://dola.com/*",
+                "https://www.dola.com/*"
+            ]
+        }
+    ]
+}

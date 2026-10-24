@@ -1,0 +1,58 @@
+# Python Bytecode and Cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# Virtual Environments
+venv/
+env/
+ENV/
+.venv/
+
+# Environment Variables & Sensitive Credentials
+.env
+.env.*
+*cookie*.json
+*cookies*.json
+DOLA_ACCOUNTS_ARRAY.json
+DOLA_ALL_ACCOUNTS_COOKIES.json
+DOLA_COOKIE_STRINGS.txt
+accounts_state.json
+*.pem
+*.key
+
+# Application & Chrome User Data
+chrome_user_data*/
+.seedance_ai_video_studio/
+output_videos/
+downloads/
+temp/
+temp_*/
+*.sqlite
+*.sqlite3
+
+# Logs & Temporary debug files
+*.log
+*.png
+!assets/*.png
+!assets/**/*.png
+seedance_ai_video_studio_src/uploads/*.txt
+seedance_ai_video_studio_src/uploads/*.md
+!seedance_ai_video_studio_src/uploads/.gitkeep
+
+# Archives
+*.zip
+*.rar
+*.7z
+*.tar.gz
+!*.wasm
+
+# IDE & Editor caches
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+Thumbs.db
+Desktop.ini

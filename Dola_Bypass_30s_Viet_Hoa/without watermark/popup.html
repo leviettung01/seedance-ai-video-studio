@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dola 30s Bypass Pro - Lê Việt Tùng</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="brand-group">
+                <div class="logo-wrapper">
+                    <img src="icon48.png" alt="Logo" class="app-logo">
+                    <span class="pulse-dot"></span>
+                </div>
+                <div class="brand-info">
+                    <h1 class="brand-title">Dola <span class="highlight">30s Bypass Pro</span></h1>
+                    <span class="engine-badge">⚡ ENGINE 30S • LÊ VIỆT TÙNG</span>
+                </div>
+            </div>
+            <div class="status-chip" id="connection-status" title="Trạng thái kết nối tab Dola">
+                <span class="status-indicator"></span>
+                <span class="status-text">Đã kết nối</span>
+            </div>
+        </header>
+
+        <!-- Main Workspace -->
+        <main class="workspace">
+            <!-- Prompt Box Section -->
+            <div class="card prompt-card">
+                <div class="card-header">
+                    <label for="prompt-input" class="card-label">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
+                        Prompt Tạo Video
+                    </label>
+                    <div class="quick-actions">
+                        <button type="button" class="btn-micro" id="btn-paste" title="Dán từ Clipboard">📋 Dán</button>
+                        <button type="button" class="btn-micro" id="btn-clear" title="Xóa nội dung">Xóa</button>
+                    </div>
+                </div>
+                
+                <textarea 
+                    id="prompt-input" 
+                    class="prompt-textarea" 
+                    placeholder="Nhập prompt tại đây (Ví dụ: Cinematic shot of a futuristic cyberpunk neon samurai in heavy rain, ultra detailed 8k 30s motion)..."
+                    rows="4"
+                ></textarea>
+                
+                <div class="prompt-footer">
+                    <span class="char-counter" id="char-count">0 ký tự</span>
+                    <button type="button" class="btn-micro sample-btn" id="btn-sample">🎲 Prompt Mẫu</button>
+                </div>
+            </div>
+
+            <!-- Configuration Row -->
+            <div class="config-row">
+                <!-- Ratio Selector -->
+                <div class="config-group">
+                    <span class="config-label">Tỉ lệ:</span>
+                    <div class="ratio-pill-group">
+                        <button type="button" class="ratio-btn active" data-ratio="9:16">9:16 (Dọc)</button>
+                        <button type="button" class="ratio-btn" data-ratio="16:9">16:9 (Ngang)</button>
+                        <button type="button" class="ratio-btn" data-ratio="1:1">1:1 (Vuông)</button>
+                    </div>
+                </div>
+
+                <!-- Duration Fixed Badge -->
+                <div class="config-group">
+                    <span class="config-label">Thời lượng:</span>
+                    <div class="duration-badge">
+                        <span class="lightning">⚡</span> <strong>Ép 30 Giây</strong>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Primary Generate Button -->
+            <button type="button" class="btn-primary-generate" id="btn-generate">
+                <span class="btn-glow"></span>
+                <span class="btn-content">
+                    <svg class="generate-icon" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/>
+                    </svg>
+                    <span id="generate-btn-text">🚀 Tạo Video 30s Không Logo</span>
+                </span>
+            </button>
+
+            <!-- Auto-Download Status Card -->
+            <div class="auto-download-card">
+                <div class="download-info">
+                    <div class="icon-circle">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                    </div>
+                    <div class="download-text">
+                        <div class="download-title">Tự Động Tải Video Sạch</div>
+                        <div class="download-desc">Master 1080P gốc không logo tự động lưu vào máy</div>
+                    </div>
+                </div>
+                <label class="switch-toggle" title="Bật/Tắt tự động tải">
+                    <input type="checkbox" id="toggle-auto-download" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+
+            <!-- Action Status Message -->
+            <div class="action-alert" id="action-alert" style="display: none;">
+                <span class="alert-icon">ℹ️</span>
+                <span class="alert-text" id="alert-message">Sẵn sàng</span>
+            </div>
+
+            <!-- Recent Auto-Downloads List Drawer -->
+            <div class="recent-downloads-section">
+                <div class="section-title-row">
+                    <span class="section-title">Video Đã Tải Gần Đây</span>
+                    <span class="download-count" id="download-count-badge">0 video</span>
+                </div>
+                <div class="downloads-list" id="downloads-list">
+                    <div class="empty-downloads">Chưa có video nào trong phiên này. Hãy nhập prompt để tạo video!</div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer" style="padding: 10px; text-align: center; border-top: 1px solid rgba(255,255,255,0.08);">
+            <div style="display: flex; justify-content: center; gap: 8px; margin-bottom: 4px;">
+                <a href="https://zalo.me/0915967790" target="_blank" style="color: #38bdf8; text-decoration: none; font-size: 11px; font-weight: 600;">💬 Zalo: 0915967790</a>
+                <span style="color: #64748b;">•</span>
+                <a href="https://www.facebook.com/tungbinh.38/" target="_blank" style="color: #60a5fa; text-decoration: none; font-size: 11px; font-weight: 600;">🌐 Facebook</a>
+            </div>
+            <span class="footer-credit" style="color: #94a3b8; font-size: 10.5px;">Phát triển bởi <strong>LÊ VIỆT TÙNG</strong> • v2.0 Pro</span>
+        </footer>
+    </div>
+
+    <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48">
+  <defs>
+    <linearGradient id="fireGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ff7e00" />
+      <stop offset="50%" stop-color="#ff0055" />
+      <stop offset="100%" stop-color="#fbbf24" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#f59e0b" />
+      <stop offset="100%" stop-color="#fef08a" />
+    </linearGradient>
+    <filter id="flameGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="2.5" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+  
+  <!-- Outer Dark Frame with Cyber Gold Border -->
+  <rect x="3" y="3" width="42" height="42" rx="12" fill="#0f141c" stroke="url(#goldGrad)" stroke-width="2.5" />
+  
+  <!-- Ambient Glow -->
+  <circle cx="24" cy="24" r="13" fill="url(#fireGrad)" opacity="0.25" filter="url(#flameGlow)" />
+  
+  <!-- AI Video Play Glyph -->
+  <path d="M17 14 L33 24 L17 34 Z" fill="url(#fireGrad)" filter="url(#flameGlow)" />
+  
+  <!-- 30S Electric Bolt Spark -->
+  <path d="M28 10.5 L22 20.5 L26.5 20.5 L20 30 L30 18 L25.5 18 Z" fill="url(#goldGrad)" stroke="#0f141c" stroke-width="1.2" />
+  
+  <!-- Corner Accent Nodes -->
+  <circle cx="9" cy="9" r="1.5" fill="#fbbf24" />
+  <circle cx="39" cy="9" r="1.5" fill="#ff7e00" />
+  <circle cx="9" cy="39" r="1.5" fill="#ff7e00" />
+  <circle cx="39" cy="39" r="1.5" fill="#fbbf24" />
+</svg>
